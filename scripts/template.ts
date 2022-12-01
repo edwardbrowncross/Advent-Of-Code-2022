@@ -1,5 +1,4 @@
-const utils = require('../utils');
-
+import * as p from '../utils/parser';
 
 
 function parseInput(input) {
