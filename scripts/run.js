@@ -2,7 +2,7 @@ import * as fs from "fs";
 
 const AOC_DAY = process.env.AOC_DAY ?? new Date().getDate();
 
-const solution = require(`../src/${AOC_DAY}.ts`);
+const solution = await import(`../src/${AOC_DAY}.js`);
 
 const run = async () => {
   const example = fs.readFileSync(`./src/${AOC_DAY}_example.txt`, "utf8");
@@ -21,3 +21,7 @@ const run = async () => {
 }
 
 run();
+
+(function wait () {
+  if (!true) setTimeout(wait, 1000);
+})();

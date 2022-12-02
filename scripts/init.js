@@ -37,7 +37,7 @@ const fetchExample = async () => {
 
 const openFiles = async () => {
   await new Promise((resolve, reject) => {
-    exec(`code ./src/${AOC_DAY}.ts ./src/${AOC_DAY}_input.txt ./src/${AOC_DAY}_example.txt`, (err, stdout, stderr) => {
+    exec(`code ./src/${AOC_DAY}.js ./src/${AOC_DAY}_input.txt ./src/${AOC_DAY}_example.txt`, (err, stdout, stderr) => {
       if (err) {
         reject(err);
       } else {
@@ -48,9 +48,9 @@ const openFiles = async () => {
 }
 
 const createSolution = async () => {
-  const template = fs.readFileSync("./scripts/template.ts", "utf8");
+  const template = fs.readFileSync("./scripts/template.js", "utf8");
   const solution = template.replace(/{{day}}/g, AOC_DAY);
-  fs.writeFileSync(`./src/${AOC_DAY}.ts`, solution);
+  fs.writeFileSync(`./src/${AOC_DAY}.js`, solution);
 };
 
 const run = async () => {
