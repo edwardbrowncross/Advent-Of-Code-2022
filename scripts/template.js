@@ -1,26 +1,17 @@
 import * as p from '../utils/parser';
 
+export const parseInput = p.blocks(p.lines(p.words()));
 
-function parseInput(input) {
-  return input
-    .split('\n')
-    .map(line => line.split(' '));
-}
-
-function part1(input) {
+export const part1 = (input) => {
   const data = parseInput(input);
   
 
   return;
 }
 
-function part2(input) {
+export const part2 = (input) => {
   const data = parseInput(input);
   
 
   return;
 }
-
-module.exports = {
-  part1, part2
-};
