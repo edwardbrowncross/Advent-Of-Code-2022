@@ -1,7 +1,7 @@
-const fs = require("fs");
-const { exec } = require("child_process");
-const fetch = require("node-fetch");
-const cheerio = require('cheerio');
+import fs from "fs";
+import { exec } from "child_process";
+import fetch from "node-fetch";
+import cheerio from 'cheerio';
 
 const AOC_YEAR = process.env.AOC_YEAR ?? new Date().getFullYear();
 const AOC_DAY = process.env.AOC_DAY ?? new Date().getDate();

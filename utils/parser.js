@@ -14,8 +14,9 @@ export const split = (char, fn=ident) => (x) => mapFns(fn)(x.split(char))
 export const lines = (fn = ident) => split('\n', fn);
 export const list = (fn = ident) => split(',', fn);
 export const words = (fn = ident) => split(' ', fn);
+export const letters = (fn = ident) => split('', fn);
 export const blocks = (fn = ident) => split('\n\n', fn);
-export const grid = (fn = ident) => split('\n', split('', fn));
+export const grid = (fn = ident) => lines(letters(fn));
 export const equals = (x) => (y) => x === y;
 export const map = (map) => (x) => map[x] ?? null;
 export const fromEntries = (fn = ident) => x => Object.fromEntries(fn(x));
