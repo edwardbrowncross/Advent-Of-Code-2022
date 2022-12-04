@@ -14,6 +14,7 @@ export const union = (...lists) => {
   }
 }
 
+// takes sets, arrays, an array of sets or arrays
 export const intersection = (...lists) => {
   if ((lists.length === 1 || typeof lists[1] === 'number') && Array.isArray(lists[0])) {
     return intersection(...(lists[0]));
@@ -46,3 +47,52 @@ export const sum = arr => arr.reduce(add, 0);
 // (inclusive)
 export const range = (start, end) => new Array(end - start + 1).fill().map((_, i) => start + i);
 export const charRange = (start, end) => range(start.charCodeAt(0), end.charCodeAt(0)).map(x => String.fromCharCode(x));
+
+export const ascending = (a, b) => a - b;
+export const descending = (a, b) => b - a;
+export const ascendingBy = key => (a, b) => a[key] - b[key];
+export const descendingBy = key => (a, b) => b[key] - a[key];
+
+export const map = (arr, fn, { circular = false } = {}) => {
+  return arr.map((x, i) => {
+    const delta = j => {
+      if (i + j > 0 && i + j < arr.length) {
+        return arr[i + j];
+      } else if (circular) {
+        return arr[(i + j + arr.length) % arr.length];
+      } else {
+        return null;
+      }
+    }
+    const extra = {
+      delta,
+      l: (n=1) => delta(-n),
+      r: (n=1) => delta(n),
+    }
+    return fn(x, i, extra);
+  })
+}
+
+export const map2d = (arr, fn, { circular = false } = {}) => {
+  return arr.map((row, i) => {
+    return row.map((x, j) => {
+      const delta = (di, dj) => {
+        if (i + di > 0 && i + di < arr.length && j + dj > 0 && j + dj < row.length) {
+          return arr[i + di][j + dj];
+        } else if (circular) {
+          return arr[(i + di + arr.length) % arr.length][(j + dj + row.length) % row.length];
+        } else {
+          return null;
+        }
+      }
+      const extra = {
+        delta,
+        l: (n=1) => delta(0, -n),
+        r: (n=1) => delta(0, n),
+        u: (n=1) => delta(-n, 0),
+        d: (n=1) => delta(n, 0),
+      }
+      return fn(x, i, j, extra);
+    });
+  });
+}
