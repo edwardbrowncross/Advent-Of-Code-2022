@@ -22,3 +22,4 @@ export const map = (map) => (x) => map[x] ?? null;
 export const fromEntries = (fn = ident) => x => Object.fromEntries(fn(x));
 export const object = (sep = ',', eq = '=') => fromEntries(split(sep, split(eq)));
 export const chain = (...fns) => x => fns.reduce((acc, fn) => fn(acc), x);
+export const name = (names) => (arr) => Object.fromEntries(names.map((name, i) => [name, arr[i]]));
