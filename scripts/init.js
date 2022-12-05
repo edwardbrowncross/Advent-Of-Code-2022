@@ -1,7 +1,6 @@
 import fs from "fs";
 import { exec } from "child_process";
 import fetch from "node-fetch";
-import cheerio from 'cheerio';
 
 const AOC_YEAR = process.env.AOC_YEAR ?? new Date().getFullYear();
 const AOC_DAY = process.env.AOC_DAY ?? new Date().getDate();
@@ -19,25 +18,9 @@ const fetchInput = async () => {
   fs.writeFileSync(`./src/${AOC_DAY}_input.txt`, input.trim());
 };
 
-const fetchExample = async () => {
-  const response = await fetch(`${AOC_URL}`, {
-    headers: {
-      Cookie: `session=${AOC_SESSION}`,
-    },
-  });
-  const html = await response.text();
-  const $ = cheerio.load(html);
-  // Find the first pre tag after the word example appears in the text
-  const example = $('p:contains("example")').eq(0).next('pre').text();
-  // Finds the last bold code in part 1
-  const solution = $('.day-desc').first().find('code em, em code').last().text();
-  fs.writeFileSync(`./src/${AOC_DAY}_example.txt`, example.trim());
-  fs.writeFileSync(`./src/${AOC_DAY}_example_solution.txt`, solution.trim());
-}
-
 const openFiles = async () => {
   await new Promise((resolve, reject) => {
-    exec(`code ./src/${AOC_DAY}.js ./src/${AOC_DAY}_input.txt ./src/${AOC_DAY}_example.txt`, (err, stdout, stderr) => {
+    exec(`code ./src/${AOC_DAY}.js ./src/${AOC_DAY}_input.txt`, (err, stdout, stderr) => {
       if (err) {
         reject(err);
       } else {
@@ -55,7 +38,6 @@ const createSolution = async () => {
 
 const run = async () => {
   await fetchInput();
-  await fetchExample();
   await createSolution();
 
   await openFiles();

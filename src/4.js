@@ -9,8 +9,7 @@ export const parseInput = p.lines(p.list(
 ));
 
 export const part1 = (input) => {
-  const data = parseInput(input);
-  const encompassing = data
+  const encompassing = input
     .filter(([a, b]) =>
       u.intersection(a, b).length === Math.min(a.length, b.length)
     );
@@ -19,8 +18,7 @@ export const part1 = (input) => {
 }
 
 export const part2 = (input) => {
-  const data = parseInput(input);
-  const overlapping = data
+  const overlapping = input
     .filter(([a, b]) =>
       u.intersection(a, b).length > 0
     );

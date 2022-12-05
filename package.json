@@ -6,14 +6,14 @@
   "type": "module",
   "scripts": {
     "init": "dotenv node scripts/init.js",
-    "start": "dotenv npx nodemon scripts/run.js"
+    "start": "dotenv node scripts/run.js"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "cheerio": "^1.0.0-rc.12",
+    "chokidar": "^3.5.3",
     "dotenv-cli": "^6.0.0",
-    "node-fetch": "^2.6.7",
-    "nodemon": "^2.0.20"
+    "node-fetch": "^2.6.7"
   }
 }
