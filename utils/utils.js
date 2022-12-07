@@ -98,3 +98,5 @@ export const map2d = (arr, fn, { circular = false } = {}) => {
 }
 
 export const transpose = arr => arr[0].map((_, i) => arr.map(row => row[i]));
+
+export const deepCopy = obj => JSON.parse(JSON.stringify(obj));

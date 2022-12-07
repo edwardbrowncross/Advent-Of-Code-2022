@@ -75,17 +75,16 @@ const submitAnswer = async (answer, part) => {
   }
 }
 
-const clone = obj => JSON.parse(JSON.stringify(obj));
 
 const checkExample = (input, expected, fn) => {
-  const result = fn(clone(input));
+  const result = fn(input);
   const ok = String(result) === expected;
   console.log(`Example: \t${result} \t${ok ? "✅" : `❌ (expected ${expected})`}`);
   return ok;
 }
 
 const runRealInput = (input, done, fn) => {
-  const result = fn(clone(input));
+  const result = fn(input);
   console.log(`Result: \t${result} \t${done ? "✅" : "❌"}`);
   return result;
 }
@@ -109,8 +108,9 @@ const onCodeChange = async () => {
   console.log('--------- Part 1 ---------');
   try {
     // Check whether part1 actually returns something
-    if (code.part1(clone(parsedExample)) === undefined) {
-      console.log(JSON.stringify(parsedExample));
+    if (code.part1(parsedExample) === undefined) {
+      // console.log(JSON.stringify(parsedExample));
+      console.log(parsedExample);
       console.log("Part 1 returning undefined");
       return;
     }

@@ -18,9 +18,9 @@ const solve = (input, length) => {
 }
 
 export const part1 = (input) => {
-  return solve(input, 4);
+  return solve(u.deepCopy(input), 4);
 }
 
 export const part2 = (input) => {
-  return solve(input, 14);
+  return solve(u.deepCopy(input), 14);
 }
