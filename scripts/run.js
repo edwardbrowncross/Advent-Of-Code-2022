@@ -138,7 +138,7 @@ const onCodeChange = async () => {
   try {
     const exampleOk = checkExample(parsedExample, solution2, code.part2);
     if (!exampleOk) {
-      // return;
+      return;
     }
     const result = runRealInput(parsedInput, done2, code.part2);
     if (!done2) {

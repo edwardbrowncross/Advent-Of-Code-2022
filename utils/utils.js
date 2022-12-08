@@ -91,6 +91,8 @@ export const map2d = (arr, fn, { circular = false } = {}) => {
         r: (n=1) => delta(0, n),
         u: (n=1) => delta(-n, 0),
         d: (n=1) => delta(n, 0),
+        row: (n=0) => arr[i + n],
+        col: (n=0) => arr.map(row => row[j + n]),
       }
       return fn(x, i, j, extra);
     });
