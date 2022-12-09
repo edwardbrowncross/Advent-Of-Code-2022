@@ -10,7 +10,7 @@ const AOC_SESSION = process.env.AOC_SESSION;
 const AOC_URL = `https://adventofcode.com/${AOC_YEAR}/day/${AOC_DAY}`;
 
 // May I be forgiven for this lazy use of global variables and the spaghetti code it produces 🙏
-let example, solution1, solution2, done1, done2;
+let example1, solution1, example2, solution2, done1, done2;
 let input;
 const incorrectAnswers = [null, [],[]]
 
@@ -23,7 +23,8 @@ const loadWebData = async () => {
   const html = await response.text();
   const $ = load(html);
   // Find the first pre tag after the word example appears in the text
-  example = $('p:contains("example")').eq(0).next('pre').text().replace(/\n$/, '');
+  example1 = $('.day-desc').eq(0).find('p:contains("example:")').first().next('pre').text().replace(/\n$/, '');
+  example2 = $('.day-desc').eq(1).find('p:contains("example:")').first().next('pre').text().replace(/\n$/, '') ?? example1;
   // Finds the last bold code in part 1
   solution1 = process.env.AOC_SOLUTION_1 ?? $('.day-desc').eq(0).find('code em, em code').last().text();
   done1 = $('p:contains("Your puzzle answer was")').length >= 1;
@@ -94,9 +95,10 @@ const onCodeChange = async () => {
 
   const code = await loadCode();
 
-  let parsedExample, parsedInput;
+  let parsedExample1, parsedExample2, parsedInput;
   try {
-    parsedExample = code.parseInput(example);
+    parsedExample1 = code.parseInput(example1);
+    parsedExample2 = code.parseInput(example2);
     parsedInput = code.parseInput(input);
   } catch (e) {
     console.log("Error parsing input");
@@ -108,15 +110,15 @@ const onCodeChange = async () => {
   console.log('--------- Part 1 ---------');
   try {
     // Check whether part1 actually returns something
-    if (code.part1(parsedExample) === undefined) {
+    if (code.part1(parsedExample1) === undefined) {
       // console.log(JSON.stringify(parsedExample));
-      console.log(parsedExample);
+      console.log(parsedExample1);
       console.log("Part 1 returning undefined");
       return;
     }
 
-    const exampleOk = checkExample(parsedExample, solution1, code.part1);
-    if (!exampleOk) {
+    const exampleOk = checkExample(parsedExample1, solution1, code.part1);
+    if (!exampleOk && !done1) {
       return;
     }
     const result = runRealInput(parsedInput, done1, code.part1);
@@ -136,7 +138,7 @@ const onCodeChange = async () => {
   console.log('');
   console.log('--------- Part 2 ---------');
   try {
-    const exampleOk = checkExample(parsedExample, solution2, code.part2);
+    const exampleOk = checkExample(parsedExample2, solution2, code.part2);
     if (!exampleOk) {
       return;
     }
