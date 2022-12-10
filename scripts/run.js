@@ -23,8 +23,11 @@ const loadWebData = async () => {
   const html = await response.text();
   const $ = load(html);
   // Find the first pre tag after the word example appears in the text
-  example1 = $('.day-desc').eq(0).find('p:contains("example:")').first().next('pre').text().replace(/\n$/, '');
-  example2 = $('.day-desc').eq(1).find('p:contains("example:")').first().next('pre').text().replace(/\n$/, '') ?? example1;
+  example1 = $('.day-desc').eq(0).find('p:contains("example:"), p:contains("example,")').first().next('pre').text().replace(/\n$/, '');
+  example2 = $('.day-desc').eq(1).find('p:contains("example:"), p:contains("example,")').first().next('pre').text().replace(/\n$/, '');
+  if (example2 === '') {
+    example2 = example1
+  }
   // Finds the last bold code in part 1
   solution1 = process.env.AOC_SOLUTION_1 ?? $('.day-desc').eq(0).find('code em, em code').last().text();
   done1 = $('p:contains("Your puzzle answer was")').length >= 1;
@@ -81,7 +84,7 @@ const checkExample = (input, expected, fn) => {
   const result = fn(input);
   const ok = String(result) === expected;
   console.log(`Example: \t${result} \t${ok ? "✅" : `❌ (expected ${expected})`}`);
-  return ok;
+  return ok || result === null;
 }
 
 const runRealInput = (input, done, fn) => {
@@ -143,7 +146,7 @@ const onCodeChange = async () => {
       return;
     }
     const result = runRealInput(parsedInput, done2, code.part2);
-    if (!done2) {
+    if (!done2 && result !== null) {
       await submitAnswer(result, 2);
     }
   } catch (e) {
