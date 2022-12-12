@@ -77,7 +77,7 @@ export const map2d = (arr, fn, { circular = false } = {}) => {
   return arr.map((row, i) => {
     return row.map((x, j) => {
       const delta = (di, dj) => {
-        if (i + di > 0 && i + di < arr.length && j + dj > 0 && j + dj < row.length) {
+        if (i + di >= 0 && i + di < arr.length && j + dj >= 0 && j + dj < row.length) {
           return arr[i + di][j + dj];
         } else if (circular) {
           return arr[(i + di + arr.length) % arr.length][(j + dj + row.length) % row.length];
@@ -98,6 +98,21 @@ export const map2d = (arr, fn, { circular = false } = {}) => {
     });
   });
 }
+
+export const findIndex2d = (arr, fn) => {
+  const result = arr
+    .flatMap((row, i) => row.map((value, j) => ({ value, i, j })))
+    .find(({ value, i, j }) => fn(value, i, j));
+  return result ? [result.i, result.j] : null;
+}
+
+export const forEach2d = (arr, fn) => {
+  arr.forEach((row, i) => {
+    row.forEach((value, j) => {
+      fn(value, i, j);
+    });
+  });
+};
 
 export const transpose = arr => arr[0].map((_, i) => arr.map(row => row[i]));
 
