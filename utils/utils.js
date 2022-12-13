@@ -42,6 +42,7 @@ export const splitEvery = (n, arr) => {
 }
 
 export const add = (a, b) => a + b;
+export const multiply = (a, b) => a * b;
 export const sum = arr => arr.reduce(add, 0);
 
 // (inclusive)
