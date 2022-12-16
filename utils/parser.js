@@ -23,3 +23,8 @@ export const fromEntries = (fn = ident) => x => Object.fromEntries(fn(x));
 export const object = (sep = ',', eq = '=') => fromEntries(split(sep, split(eq)));
 export const chain = (...fns) => x => fns.reduce((acc, fn) => fn(acc), x);
 export const name = (names) => (arr) => Object.fromEntries(names.map((name, i) => [name, arr[i]]));
+export const trim = (fn = ident) => (x) => fn(x.trim());
+export const regex = (regex, fn = ident) => (x) => {
+  const match = x.match(regex);
+  return match ? mapFns(fn)(match.slice(1)) : null;
+}

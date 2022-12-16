@@ -63,6 +63,7 @@ const submitAnswer = async (answer, part) => {
   const message = $('article p').text().trim();
   if (message.includes(`That's not the right answer`)) {
     console.log(`😢 Incorrect`);
+    console.log(message);
     incorrectAnswers[part].push(answer);
     return false;
   } else if (message.includes('You gave an answer too recently')) {
