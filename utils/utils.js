@@ -67,8 +67,8 @@ export const map = (arr, fn, { circular = false } = {}) => {
     }
     const extra = {
       delta,
-      l: (n=1) => delta(-n),
-      r: (n=1) => delta(n),
+      l: (n = 1) => delta(-n),
+      r: (n = 1) => delta(n),
     }
     return fn(x, i, extra);
   })
@@ -88,14 +88,42 @@ export const map2d = (arr, fn, { circular = false } = {}) => {
       }
       const extra = {
         delta,
-        l: (n=1) => delta(0, -n),
-        r: (n=1) => delta(0, n),
-        u: (n=1) => delta(-n, 0),
-        d: (n=1) => delta(n, 0),
-        row: (n=0) => arr[i + n],
-        col: (n=0) => arr.map(row => row[j + n]),
+        l: (n = 1) => delta(0, -n),
+        r: (n = 1) => delta(0, n),
+        u: (n = 1) => delta(-n, 0),
+        d: (n = 1) => delta(n, 0),
+        row: (n = 0) => arr[i + n],
+        col: (n = 0) => arr.map(row => row[j + n]),
       }
       return fn(x, i, j, extra);
+    });
+  });
+}
+
+export const map3d = (arr, fn, { circular = false } = {}) => {
+  return arr.map((plane, i) => {
+    return plane.map((row, j) => {
+      return row.map((x, k) => {
+        const delta = (di, dj, dk) => {
+          if (i + di >= 0 && i + di < arr.length && j + dj >= 0 && j + dj < plane.length && k + dk >= 0 && k + dk < row.length) {
+            return arr[i + di][j + dj][k + dk];
+          } else if (circular) {
+            return arr[(i + di + arr.length) % arr.length][(j + dj + plane.length) % plane.length][(k + dk + row.length) % row.length];
+          } else {
+            return null;
+          }
+        }
+        const extra = {
+          delta,
+          l: (n = 1) => delta(0, 0, -n),
+          r: (n = 1) => delta(0, 0, n),
+          u: (n = 1) => delta(n, 0, 0),
+          d: (n = 1) => delta(-n, 0, 0),
+          f: (n = 1) => delta(0, n, 0),
+          b: (n = 1) => delta(0, -n, 0),
+        }
+        return fn(x, i, j, k, extra);
+      });
     });
   });
 }
