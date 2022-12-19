@@ -11,6 +11,7 @@ export const mapFns = fns => {
   }
 }
 export const split = (char, fn=ident) => (x) => mapFns(fn)(x.split(char))
+export const trimSplit = (char, fn=ident) => (x) => mapFns(fn)(x.split(char).filter(x => x.trim() !== ''));
 export const lines = (fn = ident) => split('\n', fn);
 export const list = (fn = ident) => split(',', fn);
 export const words = (fn = ident) => split(' ', fn);
