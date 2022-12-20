@@ -23,8 +23,8 @@ const loadWebData = async () => {
   const html = await response.text();
   const $ = load(html);
   // Find the first pre tag after the word example appears in the text
-  example1 = $('.day-desc').eq(0).find('p:contains("example:"), p:contains("example,")').first().next('pre').text().replace(/\n$/, '');
-  example2 = $('.day-desc').eq(1).find('p:contains("example:"), p:contains("example,")').first().next('pre').text().replace(/\n$/, '');
+  example1 = $('.day-desc').eq(0).find('p:contains("example:"), p:contains("Consider this")').first().next('pre').text().replace(/\n$/, '');
+  example2 = $('.day-desc').eq(1).find('p:contains("example:"), p:contains("Consider this")').first().next('pre').text().replace(/\n$/, '');
   if (example2 === '') {
     example2 = example1
   }
